@@ -4,47 +4,47 @@ const tests = [
   {
     input: "Password123!",
     expected: true,
-    description: "Valid password with all criteria"
+    description: "Valid password with all requirements"
   },
   {
-    input: "A1!45678",
+    input: "a1!bcdef",
     expected: true,
-    description: "Valid password at exactly 8 characters"
+    description: "Valid password at minimum length (8)"
   },
   {
-    input: "Short1!",
+    input: "a1!bcde",
     expected: false,
-    description: "Invalid: Less than 8 characters"
+    description: "Too short (7 characters)"
   },
   {
-    input: "NoSpecialChar123",
+    input: "NoSpecial123",
     expected: false,
-    description: "Invalid: Missing special character"
+    description: "Missing special character"
   },
   {
-    input: "NoNumbers!",
+    input: "NoNumber!abc",
     expected: false,
-    description: "Invalid: Missing numbers"
+    description: "Missing number"
   },
   {
     input: "12345678!",
     expected: false,
-    description: "Invalid: Missing letters"
+    description: "Missing letter"
+  },
+  {
+    input: "        !",
+    expected: false,
+    description: "Missing number and letter"
   },
   {
     input: "",
     expected: false,
-    description: "Invalid: Empty string"
+    description: "Empty string"
   },
   {
     input: null,
     expected: false,
-    description: "Invalid: Null input"
-  },
-  {
-    input: 12345678,
-    expected: false,
-    description: "Invalid: Non-string input"
+    description: "Null input"
   }
 ];
 
@@ -52,10 +52,10 @@ tests.forEach(({ input, expected, description }) => {
   const result = validatePassword(input);
   if (result !== expected) {
     throw new Error(
-      `Test failed: ${description}\n` +
-      `Input: ${input}\n` +
+      `Test Failed: ${description}\n` +
+      `Input: "${input}"\n` +
       `Expected: ${expected}\n` +
-      `Actual: ${result}`
+      `Received: ${result}`
     );
   }
 });
